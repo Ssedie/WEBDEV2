@@ -111,12 +111,12 @@ public class CarService {
             while((line = br.readLine()) != null) {
                 String[] data = line.split(",", -1);
 
-                if (data.length >= 11) {
+                if (data.length >= 8) {
                     Car c = new Car();
                     c.setId(Integer.parseInt(data[0]));
                     c.setMake(data[1]);
                     c.setYear(Integer.parseInt(data[2]));
-                    c.setLicensePlateNumber(Integer.parseInt(data[3]));
+                    c.setLicensePlateNumber(data[3]);
                     c.setColor(data[4]);
                     c.setBodyType(data[5]);
                     c.setEngineType(data[6]);

@@ -4,13 +4,13 @@ public class Car {
     int id;
     String make;
     int year;
-    int licensePlateNumber;
+    String licensePlateNumber;
     String color;
     String bodyType;
     String engineType;
     String transmission;
 
-    public Car(int id, String make, int year, int licensePlateNumber, String color, String bodyType, String engineType, String transmission) {
+    public Car(int id, String make, int year, String licensePlateNumber, String color, String bodyType, String engineType, String transmission) {
         this.id = id;
         this.make = make;
         this.year = year;
@@ -41,10 +41,10 @@ public class Car {
     public void setYear(int year) {
         this.year = year;
     }
-    public int getLicensePlateNumber() {
+    public String getLicensePlateNumber() {
         return licensePlateNumber;
     }
-    public void setLicensePlateNumber(int licensePlateNumber) {
+    public void setLicensePlateNumber(String licensePlateNumber) {
         this.licensePlateNumber = licensePlateNumber;
     }
     public String getColor() {
