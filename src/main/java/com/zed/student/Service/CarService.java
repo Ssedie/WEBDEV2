@@ -1,5 +1,6 @@
-package com.zed.student;
+package com.zed.student.Service;
 
+import com.zed.student.Class.Car;
 import org.springframework.stereotype.Service;
 
 import java.io.*;

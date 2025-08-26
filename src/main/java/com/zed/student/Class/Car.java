@@ -1,4 +1,4 @@
-package com.zed.student;
+package com.zed.student.Class;
 
 public class Car {
     int id;
