@@ -20,7 +20,7 @@ public class Car {
     String engineType;
     String transmission;
 
-    public Car(int id, String make, int year, String licensePlateNumber, String color, String bodyType, String engineType, String transmission) {
+    public Car(Integer id, String make, int year, String licensePlateNumber, String color, String bodyType, String engineType, String transmission) {
         this.id = id;
         this.make = make;
         this.year = year;
