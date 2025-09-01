@@ -8,28 +8,27 @@
 </head>
 
 <body>
-
-
 <form th:action="@{/update}" th:object="${car}" method="post">
     <h1>Edit Car</h1>
+
     <!-- Hidden ID so update knows which car -->
-    <input type="hidden" th:field="*{id}">
+    <input type="hidden" th:field="*{id}"/>
 
-    <label>Make:</label>
-    <input type="text" th:field="*{make}" required>
+    <label for="make">Make:</label>
+    <input id="make" type="text" th:field="*{make}" required/>
 
-    <label>Year:</label>
-    <input type="number" th:field="*{year}" min="1900" max="2100" required>
+    <label for="year">Year:</label>
+    <input id="year" type="number" th:field="*{year}" min="1900" max="2100" required/>
 
-    <label>License Plate Number:</label>
-    <input type="text" th:field="*{licensePlateNumber}" required>
+    <label for="licensePlateNumber">License Plate Number:</label>
+    <input id="licensePlateNumber" type="text" th:field="*{licensePlateNumber}" required/>
 
-    <label>Color:</label>
-    <input type="text" th:field="*{color}" required>
+    <label for="color">Color:</label>
+    <input id="color" type="text" th:field="*{color}" required/>
 
-    <label>Body Type:</label>
-    <select th:field="*{bodyType}">
-        <option value="" disabled>-- Select Body Type --</option>
+    <label for="bodyType">Body Type:</label>
+    <select id="bodyType" th:field="*{bodyType}">
+        <option  value="" disabled>-- Select Body Type --</option>
         <option value="Sedan">Sedan</option>
         <option value="SUV">SUV</option>
         <option value="Hatchback">Hatchback</option>
@@ -38,24 +37,17 @@
         <option value="Convertible">Convertible</option>
     </select>
 
+    <label for="engineType">Engine Type:</label>
+    <select id="engineType" th:field="*{engineType}">
+        <option value="" disabled>-- Select Engine Type --</option>
+        <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
+    </select>
 
-    <div>
-        <label for="engineType">Engine Type</label>
-        <select id="engineType" th:field="*{engineType}">
-            <option value="" disabled selected>-- Select Engine Type --</option>
-            <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
-        </select>
-    </div>
-
-
-    <div>
-        <label for="transmission">Transmission</label>
-        <select id="transmission" th:field="*{transmission}">
-            <option value="" disabled selected>-- Select Transmission --</option>
-            <option th:each="t : ${sizes}" th:value="${t}" th:text="${t}"></option>
-        </select>
-    </div>
-
+    <label for="transmission">Transmission:</label>
+    <select id="transmission" th:field="*{transmission}">
+        <option value="" disabled>-- Select Transmission --</option>
+        <option th:each="t : ${sizes}" th:value="${t}" th:text="${t}"></option>
+    </select>
 
     <button type="submit">Update Car</button>
     <a href="/">Cancel</a>

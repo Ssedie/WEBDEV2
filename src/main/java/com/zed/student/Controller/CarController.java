@@ -83,10 +83,10 @@ public class CarController {
         return "redirect:/";
     }
 
-    @GetMapping("/car/{id}")
-    public String view(@PathVariable int id, Model model) {
-        Car c = carRepository.findById(id).get();
-        model.addAttribute("car", c);
-        return "view"; // create a simple view.html
-    }
+//    @GetMapping("/car/{id}")
+//    public String view(@PathVariable int id, Model model) {
+//        Car c = carRepository.findById(id).get();
+//        model.addAttribute("car", c);
+//        return "view"; // create a simple view.html
+//    }
 }
