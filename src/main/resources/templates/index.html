@@ -9,10 +9,10 @@
 <body>
 <main>
   <div class="top-bar">
-    <h1>Car List</h1>
+    <h1>List of Cars</h1>
 
     <form th:action="@{/}" method="get" class="search-form">
-      <input type="text" name="search" placeholder="Search cars..." th:value="${param.search}">
+      <input type="text" name="search" placeholder="Search cars..." th:value="${search}">
       <button type="submit">Search</button>
     </form>
 

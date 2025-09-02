@@ -1,7 +1,9 @@
 package com.zed.student.Controller;
 
+
 import com.zed.student.Repository.CarRepository;
 import com.zed.student.Class.Car;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +22,21 @@ public class CarController {
     }
 
     @GetMapping("/")
-    public String index(@RequestParam(defaultValue = "") String search, Model model) {
-        List<Car> cars = carRepository.findAll(); // ✅ only keep this
-        model.addAttribute("cars", carRepository.findAll());
+    public String index(@RequestParam(defaultValue = "") String search, HttpSession session, Model model) {
+        List<Car> cars;
+
+        if (search.isEmpty()){
+            cars = carRepository.findAll();// ✅ only keep this
+        }else{
+            cars = carRepository.findByMakeContainingIgnoreCaseOrLicensePlateNumberContainingIgnoreCaseOrColorContainingIgnoreCaseOrBodyTypeContainingIgnoreCaseOrEngineTypeContainingIgnoreCaseOrTransmissionContainingIgnoreCase(search,search,search, search, search, search);
+        }
+
+//        AppUser user = (AppUser) session.getAttribute("user");
+//        if(user == null) {
+//            return "redirect:/logout";
+//        }
+        model.addAttribute("cars", cars);
+        model.addAttribute("search", search);
 //        model.addAttribute("activeMenu", "home");
         cars.forEach(car -> {
             System.out.println(car.getMake());
@@ -31,13 +45,22 @@ public class CarController {
     }
 
     @GetMapping("/delete")
-    public String deleteCar(@RequestParam int id) {
+    public String deleteCar(@RequestParam int id, HttpSession session) {
+//        AppUser user = (AppUser) session.getAttribute("user");
+//        if(user == null) {
+//            return "redirect:/logout";
+//        }
         carRepository.deleteById(id);
         return "redirect:/";
     }
 
     @GetMapping("/new")
-    public String add(Model model) {
+    public String add(Model model, HttpSession session) {
+//        AppUser user = (AppUser) session.getAttribute("user");
+//        if(user == null) {
+//            return "redirect:/logout";
+//        }
+
         Car car = new Car();
         model.addAttribute("car", car);
         model.addAttribute("activeMenu", "new");
@@ -48,7 +71,12 @@ public class CarController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, Model model) {
+    public String save(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, HttpSession session, Model model) {
+//        AppUser user = (AppUser) session.getAttribute("user");
+//        if(user == null) {
+//            return "redirect:/logout";
+//        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
             model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
@@ -60,7 +88,12 @@ public class CarController {
     }
 
     @GetMapping("/edit")
-    public String edit(@RequestParam int id, Model model) {
+    public String edit(@RequestParam int id, Model model,HttpSession session) {
+//        AppUser user = (AppUser) session.getAttribute("user");
+//        if(user == null) {
+//            return "redirect:/logout";
+//        }
+
         Car c = carRepository.findById(id).get();
         if (c != null) {
             model.addAttribute("car", c);
@@ -72,7 +105,12 @@ public class CarController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, Model model) {
+    public String update(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, HttpSession session, Model model) {
+//        AppUser user = (AppUser) session.getAttribute("user");
+//        if(user == null) {
+//            return "redirect:/logout";
+//        }
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
             model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
