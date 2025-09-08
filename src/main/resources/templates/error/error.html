@@ -2,10 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Error</title>
+    <link rel="stylesheet" th:href="@{/css/error.css}">
 </head>
 <body>
-<h1>Error</h1>
-<p th:text="${message}">Something went wrong</p>
-<a th:href="@{/}">Back to Home</a>
+<div class="container">
+    <h1>Oof! Resource Not Found</h1>
+    <p th:text="${message}">Wew</p>
+    <a th:href="@{/}">Back to Home</a>
+</div>
+
 </body>
 </html>

@@ -1,8 +1,11 @@
 package com.zed.student.Controller;
 
 
+import com.zed.student.DTO.CarDTO;
+import com.zed.student.Exemptions.ResourceNotFoundException;
 import com.zed.student.Repository.CarRepository;
 import com.zed.student.Class.Car;
+import com.zed.student.Service.CarService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -15,10 +18,12 @@ import java.util.List;
 @Controller
 public class CarController {
 
+    private final CarService carService;
     CarRepository carRepository;
 
-    public CarController(CarRepository carRepository) {
+    public CarController(CarRepository carRepository, CarService carService) {
         this.carRepository = carRepository;
+        this.carService = carService;
     }
 
     @GetMapping("/")
@@ -60,9 +65,8 @@ public class CarController {
 //        if(user == null) {
 //            return "redirect:/logout";
 //        }
-
-        Car car = new Car();
-        model.addAttribute("car", car);
+        CarDTO carDTO = new CarDTO();
+        model.addAttribute("car", carDTO);
         model.addAttribute("activeMenu", "new");
 
         model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
@@ -71,19 +75,25 @@ public class CarController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, HttpSession session, Model model) {
+    public String save(@ModelAttribute("car") @Valid CarDTO carDTO, BindingResult bindingResult, HttpSession session, Model model) {
 //        AppUser user = (AppUser) session.getAttribute("user");
 //        if(user == null) {
 //            return "redirect:/logout";
 //        }
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("car", carDTO);
             model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
             model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
             return "new";
         }
 
-        carRepository.save(car); // ✅ let service assign ID
+        Car car = new Car();
+        car.setMake(carDTO.getMake());
+        car.setYear(carDTO.getYear());
+        car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
+        car.setColor(carDTO.getColor());
+        carRepository.save(car);
         return "redirect:/";
     }
 
@@ -105,18 +115,24 @@ public class CarController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("car") @Valid Car car, BindingResult bindingResult, HttpSession session, Model model) {
+    public String update(@ModelAttribute("carDTO") @Valid CarDTO carDTO, BindingResult bindingResult, HttpSession session, Model model) {
 //        AppUser user = (AppUser) session.getAttribute("user");
 //        if(user == null) {
 //            return "redirect:/logout";
 //        }
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("car", carDTO);
             model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
             model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
             return "edit";
         }
 
+        Car car = new Car();
+        car.setMake(carDTO.getMake());
+        car.setYear(carDTO.getYear());
+        car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
+        car.setColor(carDTO.getColor());
         carRepository.save(car);
         return "redirect:/";
     }

@@ -15,16 +15,20 @@
     <input type="hidden" th:field="*{id}"/>
 
     <label for="make">Make:</label>
-    <input id="make" type="text" th:field="*{make}" required/>
+    <input id="make" type="text" th:field="*{make}"/>
+    <div th:if="${#fields.hasErrors('make')}" th:errors="*{make}" class="error"></div>
 
     <label for="year">Year:</label>
-    <input id="year" type="number" th:field="*{year}" min="1900" max="2100" required/>
+    <input id="year" type="number" th:field="*{year}" min="1900" max="2100"/>
+    <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="error"></div>
 
     <label for="licensePlateNumber">License Plate Number:</label>
-    <input id="licensePlateNumber" type="text" th:field="*{licensePlateNumber}" required/>
+    <input id="licensePlateNumber" type="text" th:field="*{licensePlateNumber}"/>
+    <div th:if="${#fields.hasErrors('licensePlateNumber')}" th:errors="*{licensePlateNumber}" class="error"></div>
 
     <label for="color">Color:</label>
-    <input id="color" type="text" th:field="*{color}" required/>
+    <input id="color" type="text" th:field="*{color}"/>
+    <div th:if="${#fields.hasErrors('color')}" th:errors="*{color}" class="error"></div>
 
     <label for="bodyType">Body Type:</label>
     <select id="bodyType" th:field="*{bodyType}">
@@ -36,18 +40,21 @@
         <option value="Coupe">Coupe</option>
         <option value="Convertible">Convertible</option>
     </select>
+    <div th:if="${#fields.hasErrors('bodyType')}" th:errors="*{bodyType}" class="error"></div>
 
     <label for="engineType">Engine Type:</label>
     <select id="engineType" th:field="*{engineType}">
         <option value="" disabled>-- Select Engine Type --</option>
         <option th:each="t : ${types}" th:value="${t}" th:text="${t}"></option>
     </select>
+    <div th:if="${#fields.hasErrors('engineType')}" th:errors="*{engineType}" class="error"></div>
 
     <label for="transmission">Transmission:</label>
     <select id="transmission" th:field="*{transmission}">
         <option value="" disabled>-- Select Transmission --</option>
         <option th:each="t : ${sizes}" th:value="${t}" th:text="${t}"></option>
     </select>
+    <div th:if="${#fields.hasErrors('transmission')}" th:errors="*{transmission}" class="error"></div>
 
     <button type="submit">Update Car</button>
     <a href="/">Cancel</a>

@@ -1,7 +1,11 @@
 package com.zed.student.Exemptions;
 
 public class ResourceNotFoundException extends RuntimeException {
-    public ResourceNotFoundException(String resource, Long id) {
+    public ResourceNotFoundException(String resource, int id) {
         super(resource + " with ID " + id + " not found.");
+    }
+
+    public ResourceNotFoundException(String resource) {
+        super(resource + " not found.");
     }
 }

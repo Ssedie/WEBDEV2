@@ -8,6 +8,18 @@
     font-family: 'Inter', sans-serif;
 }
 
+div.error{
+    display: block;
+    background: rgba(248, 113, 113, 0.15); /* soft translucent red */
+    color: #f87171; /* soft red text */
+    border-left: 4px solid #f87171; /* accent bar */
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
 body {
     min-height: 100vh;
     background: linear-gradient(135deg, #1e1e2f, #2a2a40);
