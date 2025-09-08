@@ -104,18 +104,25 @@ public class CarController {
 //            return "redirect:/logout";
 //        }
 
-        Car c = carRepository.findById(id).get();
-        if (c != null) {
-            model.addAttribute("car", c);
-            model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
-            model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
-            return "edit";
-        }
-        return "redirect:/";
+        Car c = carRepository.findById(id).orElseThrow(() -> new RuntimeException("Car not found"));
+
+        CarDTO carDTO = new CarDTO();
+        carDTO.setId(c.getId());
+        carDTO.setMake(c.getMake());
+        carDTO.setYear(c.getYear());
+        carDTO.setLicensePlateNumber(c.getLicensePlateNumber());
+        carDTO.setColor(c.getColor());
+        carDTO.setEngineType(c.getEngineType());
+        carDTO.setTransmission(c.getTransmission());
+
+        model.addAttribute("car", carDTO);
+        model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
+        model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
+        return "edit";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute("carDTO") @Valid CarDTO carDTO, BindingResult bindingResult, HttpSession session, Model model) {
+    public String update(@ModelAttribute("car") @Valid CarDTO carDTO, BindingResult bindingResult, HttpSession session, Model model) {
 //        AppUser user = (AppUser) session.getAttribute("user");
 //        if(user == null) {
 //            return "redirect:/logout";
@@ -128,11 +135,15 @@ public class CarController {
             return "edit";
         }
 
-        Car car = new Car();
+        Car car = carRepository.findById(carDTO.getId())
+                .orElseThrow(() -> new RuntimeException("Car not found"));
         car.setMake(carDTO.getMake());
         car.setYear(carDTO.getYear());
         car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
         car.setColor(carDTO.getColor());
+        car.setEngineType(carDTO.getEngineType());
+        car.setTransmission(carDTO.getTransmission());
+
         carRepository.save(car);
         return "redirect:/";
     }

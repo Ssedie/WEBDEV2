@@ -6,6 +6,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class CarDTO {
+
+    int id;
+
     @NotBlank(message = "Make cannot be empty")
     @Size(min= 2,max = 50)
     String make;
@@ -23,6 +26,13 @@ public class CarDTO {
     String bodyType;
     String engineType;
     String transmission;
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getMake() {
         return make;

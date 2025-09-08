@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public String handleGenericException(Exception ex, Model model) {
-        model.addAttribute("message", "Unexpected error: " + ex.getMessage());
+        model.addAttribute("message", "Unexpected error: Resource not Found :(" );
         return "error/error";
     }
 }
