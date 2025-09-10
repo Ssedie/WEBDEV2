@@ -68,7 +68,7 @@ public class CarController {
         CarDTO carDTO = new CarDTO();
         model.addAttribute("car", carDTO);
         model.addAttribute("activeMenu", "new");
-
+        model.addAttribute("body", new String[]{"Sedan", "SUV", "Hatchback", "Pickup", "Coupe", "Convertible"});
         model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
         model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
         return "new";
@@ -83,6 +83,7 @@ public class CarController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("car", carDTO);
+            model.addAttribute("body", new String[]{"Sedan", "SUV", "Hatchback", "Pickup", "Coupe", "Convertible"});
             model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
             model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
             return "new";
@@ -93,6 +94,9 @@ public class CarController {
         car.setYear(carDTO.getYear());
         car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
         car.setColor(carDTO.getColor());
+        car.setBodyType(carDTO.getBodyType());
+        car.setEngineType(carDTO.getEngineType());
+        car.setTransmission(carDTO.getTransmission());
         carRepository.save(car);
         return "redirect:/";
     }
@@ -112,10 +116,12 @@ public class CarController {
         carDTO.setYear(c.getYear());
         carDTO.setLicensePlateNumber(c.getLicensePlateNumber());
         carDTO.setColor(c.getColor());
+        carDTO.setBodyType(c.getBodyType());
         carDTO.setEngineType(c.getEngineType());
         carDTO.setTransmission(c.getTransmission());
 
         model.addAttribute("car", carDTO);
+        model.addAttribute("body", new String[]{"Sedan", "SUV", "Hatchback", "Pickup", "Coupe", "Convertible"});
         model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
         model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
         return "edit";
@@ -130,6 +136,7 @@ public class CarController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("car", carDTO);
+            model.addAttribute("body", new String[]{"Sedan", "SUV", "Hatchback", "Pickup", "Coupe", "Convertible"});
             model.addAttribute("types", new String[]{"Gasoline", "Diesel", "Electric", "Hybrid"});
             model.addAttribute("sizes", new String[]{"Automatic", "Manual"});
             return "edit";
@@ -141,6 +148,7 @@ public class CarController {
         car.setYear(carDTO.getYear());
         car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
         car.setColor(carDTO.getColor());
+        car.setBodyType(carDTO.getBodyType());
         car.setEngineType(carDTO.getEngineType());
         car.setTransmission(carDTO.getTransmission());
 
