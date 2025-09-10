@@ -1,42 +1,28 @@
-//package com.zed.student.Service;
-//
-//import jakarta.annotation.PostConstruct;
-//import org.springframework.core.io.ClassPathResource;
-//import org.springframework.stereotype.Component;
-//
-//import java.io.*;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Component
-//public class UserService {
-//    private List<AppUser> appUsers;
-//
-//    @PostConstruct
-//    public void init() throws IOException {
-//        appUsers = new ArrayList<>();
-//        File file = new File("data/users.csv"); // path relative to project root
-//
-//        BufferedReader reader = new BufferedReader(new FileReader(file));
-//        String line;
-//        reader.readLine(); // skip header
-//        while ((line = reader.readLine()) != null) {
-//            String[] parts = line.split(",");
-//            AppUser appUser = new AppUser();
-//            appUser.setUsername(parts[0]);
-//            appUser.setPassword(parts[1]);
-//            appUsers.add(appUser);
-//        }
-//    }
-//
-//    public AppUser findByUsername(String username) {
-//        return appUsers.stream()
-//                .filter(u -> u.getUsername().equals(username))
-//                .findFirst()
-//                .orElse(null);
-//    }
-//
-//    public void save(AppUser appUser) {
-//        //TO DO
-//    }
-//}
+package com.zed.student.Service;
+
+
+import com.zed.student.Class.User;
+import com.zed.student.Repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import java.io.*;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void registerUser(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(passwordEncoder.encode(password));
+
+        userRepository.save(user);
+    }
+}
