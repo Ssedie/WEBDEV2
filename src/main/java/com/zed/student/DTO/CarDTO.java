@@ -10,12 +10,10 @@ public class CarDTO {
     int id;
 
     @NotBlank(message = "Make cannot be empty")
-    @Size(min= 2,max = 50)
     String make;
 
 
     @NotBlank(message = "Model is required")
-    @Size(min = 3,max = 50)
     String model;
 
     @Min(1886)
