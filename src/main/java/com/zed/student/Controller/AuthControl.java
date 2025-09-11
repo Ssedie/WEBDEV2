@@ -2,6 +2,7 @@ package com.zed.student.Controller;
 
 
 import com.zed.student.Service.UserService;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,13 @@ public class AuthControl {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Authentication authentication) {
+
+        if (authentication != null && authentication.isAuthenticated()
+                && !(authentication.getPrincipal() instanceof String)) {
+            return "redirect:/"; // change "/" to "/dashboard" if you prefer
+        }
+
         return "login"; // login.html
     }
 

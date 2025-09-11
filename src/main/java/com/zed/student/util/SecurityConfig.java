@@ -33,12 +33,13 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login","/register","/css/**").permitAll() // public
-                        .anyRequest().authenticated()             // secure everything else
+                        .requestMatchers("/css/**", "/register").permitAll()   // public
+                        .requestMatchers("/login").anonymous()                // only allow if NOT logged in
+                        .anyRequest().authenticated()                         // secure everything else
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true) // redirect after login
+                        .defaultSuccessUrl("/", true)// redirect after login
                         .permitAll()
                 )
                 .logout(logout -> logout

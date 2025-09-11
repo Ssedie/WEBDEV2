@@ -21,13 +21,44 @@ main {
     height: 100%;
 }
 
+/* --- Animations --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0% { text-shadow: 0 0 0 rgba(56, 189, 248, 0.7); }
+    50% { text-shadow: 0 0 8px rgba(56, 189, 248, 0.9); }
+    100% { text-shadow: 0 0 0 rgba(56, 189, 248, 0.7); }
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Title */
 h1 {
     font-weight: 800;
     color: #38bdf8; /* cyan accent */
     margin-bottom: 15px;
+    animation: pulseGlow 2.5s ease-in-out infinite alternate;
 }
 
+/* Top bar */
 .top-bar {
     display: flex;
     justify-content: space-between;
@@ -46,6 +77,7 @@ h1 {
     padding: 6px 10px;
     border-radius: 8px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    animation: fadeSlideIn 0.5s ease-out both;
 }
 
 .search-form input {
@@ -97,6 +129,7 @@ table {
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     table-layout: auto;
+    animation: fadeInUp 0.6s ease-out both;
 }
 
 th, td {
@@ -114,6 +147,18 @@ th {
     font-size: 0.85rem;
 }
 
+/* Animate rows in sequence */
+tr {
+    opacity: 0;
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+tr:nth-child(1) { animation-delay: 0.1s; }
+tr:nth-child(2) { animation-delay: 0.2s; }
+tr:nth-child(3) { animation-delay: 0.3s; }
+tr:nth-child(4) { animation-delay: 0.4s; }
+tr:nth-child(5) { animation-delay: 0.5s; }
+
 tr:hover {
     background: rgba(56, 189, 248, 0.1);
 }
@@ -125,9 +170,13 @@ tr:hover {
     font-size: 0.8rem;
     font-weight: 600;
     text-decoration: none;
-    transition: all 0.2s;
+    transition: all 0.2s, transform 0.2s;
     white-space: nowrap;
     display: inline-block;
+}
+
+.btn:hover {
+    transform: translateY(-2px) scale(1.03);
 }
 
 .add-btn {
