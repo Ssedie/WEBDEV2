@@ -20,6 +20,10 @@ public class Car {
     @Size(min= 2,max = 50)
     String make;
 
+    @NotBlank(message = "Model is required")
+    @Size(min = 3, max = 50)
+    String model;
+
     @Min(1886)
     @Max(2025)
     int year;
@@ -34,9 +38,10 @@ public class Car {
     String engineType;
     String transmission;
 
-    public Car(Integer id, String make, int year, String licensePlateNumber, String color, String bodyType, String engineType, String transmission) {
+    public Car(Integer id, String make,String model, int year, String licensePlateNumber, String color, String bodyType, String engineType, String transmission) {
         this.id = id;
         this.make = make;
+        this.model = model;
         this.year = year;
         this.licensePlateNumber = licensePlateNumber;
         this.color = color;
@@ -56,6 +61,12 @@ public class Car {
     }
     public void setMake(String make) {
         this.make = make;
+    }
+    public String getModel(){
+        return model;
+    }
+    public void setModel(String model){
+        this.model = model;
     }
     public int getYear() {
         return year;

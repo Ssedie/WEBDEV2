@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+/* Base / reset */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden; /* prevents accidental horizontal scroll */
+    -webkit-font-smoothing: antialiased;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Page background and centering */
+body {
+    font-family: 'Inter', sans-serif;
+    background: #334155;                 /* site background */
+    color: #e2e8f0;
+    display: flex;
+    align-items: center;                 /* vertical centering when content fits */
+    justify-content: center;             /* horizontal centering */
+    min-height: 100vh;
+    padding: 24px;                       /* safe gap around viewport */
+}
+
+/* Login form container */
+.login-form {
+    width: 100%;
+    max-width: 420px;                    /* keeps form a reasonable width on desktop */
+    background: #1e293b;                 /* card background */
+    padding: clamp(20px, 4vw, 32px);     /* responsive padding */
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+    margin: 0;                            /* important: do not use big top/bottom % margins */
+    /* keep the card inside the viewport vertically */
+    max-height: calc(100vh - 48px);      /* viewport minus body padding */
+    overflow-y: auto;                    /* internal scroll if form is taller than viewport */
+    -webkit-overflow-scrolling: touch;   /* smooth scrolling on mobile */
+}
+
+/* Optional: soften the internal scrollbar (WebKit only) */
+.login-form::-webkit-scrollbar {
+    width: 8px;
+}
+.login-form::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+}
+
+/* Title */
+.login-form h2 {
+    text-align: center;
+    color: #38bdf8;
+    font-weight: 700;
+    margin: 0 0 18px 0;
+    font-size: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+/* Input group */
+.login-form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 14px;
+}
+
+.login-form label {
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #cfe9ff;
+    font-size: clamp(0.82rem, 1.4vw, 0.95rem);
+}
+
+/* Inputs */
+.login-form input {
+    padding: clamp(10px, 2vw, 14px);
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background: #0f172a;
+    color: #e2e8f0;
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+    transition: border 0.18s ease, box-shadow 0.18s ease;
+}
+
+/* Focus state */
+.login-form input:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 8px rgba(56,189,248,0.14);
+}
+
+/* Button */
+.login-form button {
+    width: 100%;
+    padding: clamp(10px, 2.2vw, 14px);
+    margin-top: 6px;
+    background: #38bdf8;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.6vw, 1rem);
+    cursor: pointer;
+    transition: transform 0.12s ease, background 0.12s ease;
+}
+
+.login-form button:hover {
+    transform: translateY(-2px);
+    background: #0ea5e9;
+}
+
+/* Link */
+.login-form a {
+    display: block;
+    margin-top: 12px;
+    text-align: center;
+    color: #38bdf8;
+    text-decoration: none;
+    font-size: clamp(0.78rem, 1.2vw, 0.95rem);
+    font-weight: 600;
+}
+.login-form a:hover {
+    text-decoration: underline;
+}
+
+/* Small-screen tweaks: keep form compact and friendly */
+@media (max-width: 520px) {
+    body {
+        align-items: flex-start;   /* allow natural scroll on very small screens */
+        padding: 16px;
+    }
+
+    .login-form {
+        max-width: 100%;
+        padding: 18px;
+        max-height: calc(100vh - 32px);
+    }
+}
+
+/* Safety: if some element still leaks width, hide horizontal overflow */
+@media (max-width: 420px) {
+    html, body {
+        overflow-x: hidden;
+    }
+}

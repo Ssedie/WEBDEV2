@@ -33,7 +33,7 @@ public class CarController {
         if (search.isEmpty()){
             cars = carRepository.findAll();// ✅ only keep this
         }else{
-            cars = carRepository.findByMakeContainingIgnoreCaseOrLicensePlateNumberContainingIgnoreCaseOrColorContainingIgnoreCaseOrBodyTypeContainingIgnoreCaseOrEngineTypeContainingIgnoreCaseOrTransmissionContainingIgnoreCase(search,search,search, search, search, search);
+            cars = carRepository.findByMakeContainingIgnoreCaseOrModelContainingIgnoreCaseOrLicensePlateNumberContainingIgnoreCaseOrColorContainingIgnoreCaseOrBodyTypeContainingIgnoreCaseOrEngineTypeContainingIgnoreCaseOrTransmissionContainingIgnoreCase(search,search,search,search, search, search, search);
         }
 
 //        AppUser user = (AppUser) session.getAttribute("user");
@@ -91,6 +91,7 @@ public class CarController {
 
         Car car = new Car();
         car.setMake(carDTO.getMake());
+        car.setModel(carDTO.getModel());
         car.setYear(carDTO.getYear());
         car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
         car.setColor(carDTO.getColor());
@@ -113,6 +114,7 @@ public class CarController {
         CarDTO carDTO = new CarDTO();
         carDTO.setId(c.getId());
         carDTO.setMake(c.getMake());
+        carDTO.setModel(c.getModel());
         carDTO.setYear(c.getYear());
         carDTO.setLicensePlateNumber(c.getLicensePlateNumber());
         carDTO.setColor(c.getColor());
@@ -145,6 +147,7 @@ public class CarController {
         Car car = carRepository.findById(carDTO.getId())
                 .orElseThrow(() -> new RuntimeException("Car not found"));
         car.setMake(carDTO.getMake());
+        car.setModel(carDTO.getModel());
         car.setYear(carDTO.getYear());
         car.setLicensePlateNumber(carDTO.getLicensePlateNumber());
         car.setColor(carDTO.getColor());

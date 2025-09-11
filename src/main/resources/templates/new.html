@@ -15,6 +15,10 @@
     <input id="make" type="text" th:field="*{make}"/>
     <div class="error" th:if="${#fields.hasErrors('make')}" th:errors="*{make}" ></div>
 
+    <label for="model">Model:</label>
+    <input id="model" type="text" th:field="*{model}"/>
+    <div class="error" th:if="${#fields.hasErrors('model')}" th:errors="*{model}" ></div>
+
     <label for="year">Year:</label>
     <input id="year" type="number" th:field="*{year}"/>
     <div class="error" th:if="${#fields.hasErrors('year')}" th:errors="*{year}" ></div>
