@@ -1,21 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Employee List</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<table th:object = "@{employees}">
+<div class="top-bar">
+    <h1>Employees</h1>
+
+    <a th:href="@{/new}">Add Employee</a>
+
+    <form th:action="@{/logout}" method="post" class="logout-form">
+        <button type="submit" class="btn logout">Logout</button>
+    </form>
+</div>
+
+<table>
     <thead>
-        <tr>Id</tr>
-        <tr>Name</tr>
-        <tr>Email</tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
     </thead>
     <tbody>
-        <tr th:value = "${id}"></tr>
-        <tr th:value = "${name}"></tr>
-        <tr th:value = "${email}"></tr>
+        <tr th:each = "employee, iterStat : ${employees}">
+            <td th:text="${iterStat.index + 1}"></td>
+            <td th:text="${employee.name}"></td>
+            <td th:text="${employee.email}"></td>
+            <td class="actions">
+                <a th:href="@{/edit(id=${employee.id})}">Edit</a>
+                <a th:href="@{/delete(id=${employee.id})}">Delete</a>
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(employees)}">
+            <td colspan="9">No Employees found.</td>
+        </tr>
     </tbody>
 </table>
 

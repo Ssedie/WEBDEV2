@@ -1,22 +1,21 @@
 package com.zed.prelimss.Class;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "employees", uniqueConstraints = {
+    @UniqueConstraint(columnNames = "email")
+})
 public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    @NotBlank
+    @Column(nullable = false)
     String name;
 
-    @NotBlank
+    @Column(unique=true)
     String email;
 
     public Employee() {}
@@ -26,6 +25,12 @@ public class Employee {
         this.email = email;
     }
 
+    public Integer getId() {
+        return id;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
     public String getName() {
         return name;
     }
