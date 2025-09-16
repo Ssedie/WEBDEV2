@@ -2,7 +2,6 @@ package com.zed.prelimss.DTO;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Table(name = "employees", uniqueConstraints = {
