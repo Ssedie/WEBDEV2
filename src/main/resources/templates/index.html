@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<table th:object = "@{employees}">
+    <thead>
+        <tr>Id</tr>
+        <tr>Name</tr>
+        <tr>Email</tr>
+    </thead>
+    <tbody>
+        <tr th:value = "${id}"></tr>
+        <tr th:value = "${name}"></tr>
+        <tr th:value = "${email}"></tr>
+    </tbody>
+</table>
+
+</body>
+</html>
