@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class EmployeeController {
+public class   EmployeeController {
 
     EmployeeRepository employeeRepository;
 
@@ -82,6 +82,11 @@ public class EmployeeController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("employees", employeeDTO);
+            return "edit";
+        }
+
+        if (employeeRepository.findByEmail(employeeDTO.getEmail()).isPresent()) {
+            bindingResult.rejectValue("email", "error.employee", "Email already exists");
             return "edit";
         }
 
