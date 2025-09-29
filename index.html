@@ -10,18 +10,33 @@
 
 <body class="bg-gray-50 text-gray-800">
     <header>
-        <nav class="shadow-sm bg-white ">
-            <div class="max-w-4xl mx-auto py-3 flex justify-between items-center">
+        <nav class="shadow-sm bg-white relative">
+            <div class="max-w-4xl mx-auto py-3 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div
                         class="w-10 h-10 bg-blue-500 text-white rounded-md flex items-center justify-center font-semibold">
                         Z</div>
                     <div class="text-lg font-medium">Zed Co.</div>
                 </div>
-                <div class="space-x-4">
+                <div class=" hidden md:flex space-x-4">
                     <a href="#" class="hover:text-blue-500 text-sm">Home</a>
                     <a href="#" class="hover:text-blue-500 text-sm">About</a>
                     <a href="#" class="hover:text-blue-500 text-sm">Contact</a>
+                </div>
+                <div class="md:hidden relative">
+                    <button id="menu-btn" class="text-gray-600 hover:text-blue-500 focus:outline-none">
+
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                    <div id="menu" class="hidden md:hidden px-4 py-2 absolute top-full right-4 mt-2 w-40 bg-white rounded-md shadow-md">
+                        <a href="#" class="block py-2 text-sm hover:text-blue-500">Home</a>
+                        <a href="#" class="block py-2 text-sm hover:text-blue-500">About</a>
+                        <a href="#" class="block py-2 text-sm hover:text-blue-500">Contact</a>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -74,7 +89,8 @@
                     </div>
                     <div>
                         <label class="block font-medium">Email</label>
-                        <input type="email" placeholder="you@example.com" class="mt-1 w-full border rounded-md px-3 py-2">
+                        <input type="email" placeholder="you@example.com"
+                            class="mt-1 w-full border rounded-md px-3 py-2">
                     </div>
                     <div>
                         <label class="block font-medium">Message</label>
@@ -127,5 +143,14 @@
             utility classes and rapid prototyping.</p>
     </footer>
 </body>
+
+<script>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('menu');
+
+  btn.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+  });
+</script>
 
 </html>
