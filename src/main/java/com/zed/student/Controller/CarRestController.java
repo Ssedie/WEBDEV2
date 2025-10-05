@@ -2,17 +2,19 @@ package com.zed.student.Controller;
 
 import com.zed.student.Class.Car;
 import com.zed.student.Repository.CarRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api/cars")
-public class RestController {
+public class CarRestController {
 
     private final CarRepository carRepository;
 
-    public RestController(CarRepository carRepository) {
+    public CarRestController(CarRepository carRepository) {
         this.carRepository = carRepository;
     }
 
@@ -24,10 +26,10 @@ public class RestController {
     @GetMapping("/{id}")
     public Car getCarById(@PathVariable int id) {
         return carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
     }
 
-    @PostMapping("/{id}")
+    @PostMapping
     public Car createCar(@RequestBody Car car) {
         return carRepository.save(car);
     }
@@ -35,7 +37,7 @@ public class RestController {
     @PutMapping("/{id}")
     public Car updateCar(@PathVariable int id, @RequestBody Car carDetails) {
         Car emp = carRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Car not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
         emp.setMake(carDetails.getMake());
         emp.setYear(carDetails.getYear());
         emp.setLicensePlateNumber(carDetails.getLicensePlateNumber());
