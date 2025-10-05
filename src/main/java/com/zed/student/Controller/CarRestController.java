@@ -1,7 +1,11 @@
 package com.zed.student.Controller;
 
 import com.zed.student.Class.Car;
+import com.zed.student.DTO.CarDTO;
+import com.zed.student.Exemptions.ResourceNotFoundException;
 import com.zed.student.Repository.CarRepository;
+import com.zed.student.Service.CarService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -9,47 +13,37 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
-@RequestMapping("/api/cars")
+@RequestMapping("/api")
 public class CarRestController {
 
+    private final CarService carservice;
     private final CarRepository carRepository;
 
-    public CarRestController(CarRepository carRepository) {
+    public CarRestController(CarService carservice, CarRepository carRepository) {
+        this.carservice = carservice;
         this.carRepository = carRepository;
     }
 
-    @GetMapping
-    public List<Car> getCars() {
-        return carRepository.findAll();
+    @GetMapping("/cars")
+    public List<Car> findAll() {
+        return carservice.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Car getCarById(@PathVariable int id) {
-        return carRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
+    @PostMapping("/cars")
+    public Car createCar(@RequestBody CarDTO car) {
+        return carservice.save(car);
     }
 
-    @PostMapping
-    public Car createCar(@RequestBody Car car) {
-        return carRepository.save(car);
+    @PutMapping("cars/{id}")
+    public Car updateCar(@PathVariable int id, @RequestBody CarDTO carDetails) {
+        return carservice.save(carDetails);
     }
 
-    @PutMapping("/{id}")
-    public Car updateCar(@PathVariable int id, @RequestBody Car carDetails) {
-        Car emp = carRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Car not found"));
-        emp.setMake(carDetails.getMake());
-        emp.setYear(carDetails.getYear());
-        emp.setLicensePlateNumber(carDetails.getLicensePlateNumber());
-        emp.setColor(carDetails.getColor());
-        emp.setBodyType(carDetails.getBodyType());
-        emp.setEngineType(carDetails.getEngineType());
-        emp.setTransmission(carDetails.getTransmission());
-        return carRepository.save(emp);
-    }
-
-    @DeleteMapping("/{id}")
+    @DeleteMapping("cars/{id}")
     public void deleteCar(@PathVariable int id) {
-        carRepository.deleteById(id);
+        if (!carRepository.existsById(id)){
+            throw new ResourceNotFoundException("Car not found",id);
+        }
+        carservice.deleteCar(id);
     }
 }
