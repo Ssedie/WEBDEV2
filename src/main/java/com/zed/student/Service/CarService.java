@@ -5,6 +5,7 @@ import com.zed.student.DTO.CarDTO;
 import com.zed.student.Exemptions.ResourceNotFoundException;
 import com.zed.student.Repository.CarRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class CarService {
 
     public List<Car> findAll() {
         return carRepository.findAll();
+    }
+
+    public Car findById(int id) {
+        return carRepository.findById(id).orElse(null);
     }
 
     public Car save(CarDTO carDTO) {

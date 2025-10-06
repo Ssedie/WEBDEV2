@@ -6,6 +6,7 @@ import com.zed.student.Exemptions.ResourceNotFoundException;
 import com.zed.student.Repository.CarRepository;
 import com.zed.student.Service.CarService;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,7 +20,7 @@ public class CarRestController {
     private final CarService carservice;
     private final CarRepository carRepository;
 
-    public CarRestController(CarService carservice, CarRepository carRepository) {
+    public CarRestController(CarService carservice, CarRepository carRepository, CarService carService) {
         this.carservice = carservice;
         this.carRepository = carRepository;
     }
@@ -30,19 +31,23 @@ public class CarRestController {
     }
 
     @PostMapping("/cars")
-    public Car createCar(@RequestBody CarDTO car) {
+    public Car createCar(@Valid @RequestBody CarDTO car) {
         return carservice.save(car);
     }
 
-    @PutMapping("cars/{id}")
+    @PutMapping("/cars/{id}")
     public Car updateCar(@PathVariable int id, @RequestBody CarDTO carDetails) {
+        Car updatedCar = carservice.findById(id);
+        if (updatedCar != null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with Id: " + id + " does not exist");
+        }
         return carservice.save(carDetails);
     }
 
-    @DeleteMapping("cars/{id}")
+    @DeleteMapping("/cars/{id}")
     public void deleteCar(@PathVariable int id) {
         if (!carRepository.existsById(id)){
-            throw new ResourceNotFoundException("Car not found",id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Car with Id: " + id + " does not exist");
         }
         carservice.deleteCar(id);
     }
