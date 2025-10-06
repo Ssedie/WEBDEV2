@@ -36,12 +36,12 @@ public class CarRestController {
     }
 
     @PutMapping("/cars/{id}")
-    public Car updateCar(@PathVariable int id, @RequestBody CarDTO carDetails) {
+    public Car updateCar(@PathVariable int id, @Valid @RequestBody CarDTO carDetails) {
         Car updatedCar = carservice.findById(id);
         if (updatedCar != null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with Id: " + id + " does not exist");
         }
-        return carservice.save(carDetails);
+        return carservice.updateCar(id,carDetails);
     }
 
     @DeleteMapping("/cars/{id}")
