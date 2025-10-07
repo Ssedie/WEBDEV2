@@ -22,7 +22,7 @@ function fetchCar(){
                 <td>${car.make}</td>
                 <td>${car.model}</td>
                 <td>${car.year}</td>
-                <td>${car.LicensePlate}</td>
+                <td>${car.licensePlateNumber}</td>
                 <td>${car.color}</td>
                 <td>${car.bodyType}</td>
                 <td>${car.engineType}</td>
@@ -48,7 +48,7 @@ function deleteCar(carId) {
 function openModal() {
     const modal = document.getElementById('formSection');
     modal.classList.remove('hidden');
-    modal.querySelector("modalTitle").innerText = "Add New Car";
+    modal.querySelector("#modalTitle").innerText = "Add New Car";
 }
 
 function saveCar(event) {
