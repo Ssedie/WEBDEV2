@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+@CrossOrigin
 @org.springframework.web.bind.annotation.RestController
 @RequestMapping("/api")
 public class CarRestController {
