@@ -1,4 +1,4 @@
-package com.zed.student.Controller;
+package com.zed.student.Controller.web;
 
 
 import com.zed.student.Service.UserService;

@@ -1,8 +1,7 @@
-package com.zed.student.Controller;
+package com.zed.student.Controller.web;
 
 
 import com.zed.student.DTO.CarDTO;
-import com.zed.student.Exemptions.ResourceNotFoundException;
 import com.zed.student.Repository.CarRepository;
 import com.zed.student.Class.Car;
 import com.zed.student.Service.CarService;

@@ -1,12 +1,10 @@
-package com.zed.student.Controller;
+package com.zed.student.Controller.api;
 
 import com.zed.student.Class.Car;
 import com.zed.student.DTO.CarDTO;
-import com.zed.student.Exemptions.ResourceNotFoundException;
 import com.zed.student.Repository.CarRepository;
 import com.zed.student.Service.CarService;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -31,9 +29,19 @@ public class CarRestController {
         return carservice.findAll();
     }
 
+
     @PostMapping("/cars")
     public Car createCar(@Valid @RequestBody CarDTO car) {
         return carservice.save(car);
+    }
+
+    @GetMapping("/cars/{id}")
+    public Car getCarById(@PathVariable int id) {
+        Car car = carservice.findById(id);
+        if (car == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Car with Id: " + id + " does not exist");
+        }
+        return car;
     }
 
     @PutMapping("/cars/{id}")
