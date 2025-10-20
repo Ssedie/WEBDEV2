@@ -2,7 +2,23 @@ var apiUrl = 'http://localhost:8000/api';
 var jwtToken = '';
 var editingCarId = null;
 
-document.getElementById('loginBtn').addEventListener('click', function() {
+// 🔹 Select UI elements for visibility control
+const loginSection = document.getElementById('loginSection');
+const crudSection = document.getElementById('crudSection');
+
+// ✅ On page load: if token is saved, auto-login
+window.addEventListener('DOMContentLoaded', () => {
+    const savedToken = localStorage.getItem('jwtToken');
+    if (savedToken) {
+        jwtToken = savedToken;
+        loginSection.classList.add('hidden');
+        crudSection.classList.remove('hidden');
+        fetchCar();
+    }
+});
+
+// 🔹 Login button handler
+document.getElementById('loginBtn').addEventListener('click', function () {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     login(username, password);
@@ -18,24 +34,35 @@ function login(username, password) {
     })
     .then(res => res.json())
     .then(data => {
-        jwtToken = data.token;
-        fetchCar();
+        if (data.token) {
+            jwtToken = data.token;
+
+            // 🔹 Save login state
+            localStorage.setItem('jwtToken', jwtToken);
+
+            // 🔹 Hide login, show CRUD
+            loginSection.classList.add('hidden');
+            crudSection.classList.remove('hidden');
+
+            fetchCar();
+        } else {
+            alert('Login failed. Invalid credentials.');
+        }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Login failed');
+        alert('Login failed.');
     });
 }
 
-function fetchCar(){
-    fetch(`${apiUrl}/cars`,{
+function fetchCar() {
+    fetch(`${apiUrl}/cars`, {
         headers: {
             'Authorization': `Bearer ${jwtToken}`
         }
     })
     .then(res => res.json())
     .then(cars => {
-        console.log(cars);
         const row = document.getElementById('tableBody');
         row.innerHTML = '';
         var counter = 0;
@@ -52,12 +79,11 @@ function fetchCar(){
                 <td>${car.engineType}</td>
                 <td>${car.transmission}</td>
                 <td>
-                <button onclick="deleteCar(${car.id})">Delete</button>
-                <button onclick="editCar(${car.id})">Edit</button>
+                    <button onclick="deleteCar(${car.id})">Delete</button>
+                    <button onclick="editCar(${car.id})">Edit</button>
                 </td>
-            </tr>
-        `;
-        })
+            </tr>`;
+        });
     })
     .catch(error => console.error(error));
 }
@@ -79,7 +105,6 @@ function openModal() {
     modal.classList.remove('hidden');
     modal.querySelector("#modalTitle").innerText = "Add New Car";
 }
-
 
 function editCar(carId) {
     fetch(`${apiUrl}/cars/${carId}`, {
@@ -129,15 +154,16 @@ function saveCar(event) {
     const bodyType = document.getElementById('bodyType').value;
     const engineType = document.getElementById('engineType').value;
     const transmission = document.getElementById('transmission').value;
+
     const carData = {
-        "make":make,
-        "model":model,
-        "year":year,
-        "licensePlateNumber": licensePlateNumber,
-        "color":color,
-        "bodyType":bodyType,
-        "engineType":engineType,
-        "transmission":transmission
+        make,
+        model,
+        year,
+        licensePlateNumber,
+        color,
+        bodyType,
+        engineType,
+        transmission
     };
 
     if (editingCarId) {
@@ -145,12 +171,12 @@ function saveCar(event) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${jwtToken}` // <-- Add this line
+                'Authorization': `Bearer ${jwtToken}`
             },
             body: JSON.stringify(carData)
         })
         .then(res => res.json())
-        .then(res => {
+        .then(() => {
             editingCarId = null;
             closeModal();
             fetchCar();
@@ -161,12 +187,12 @@ function saveCar(event) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${jwtToken}` // <-- Add this line
+                'Authorization': `Bearer ${jwtToken}`
             },
             body: JSON.stringify(carData)
         })
         .then(res => res.json())
-        .then(res => {
+        .then(() => {
             closeModal();
             fetchCar();
         })
@@ -180,7 +206,14 @@ function closeModal() {
     document.getElementById('carForm').reset();
 }
 
+// 🔹 Logout function (optional)
+function logout() {
+    localStorage.removeItem('jwtToken');
+    jwtToken = '';
+    crudSection.classList.add('hidden');
+    loginSection.classList.remove('hidden');
+}
+
+// make editCar accessible from inline HTML
 window.editCar = editCar;
-
-
-
+window.logout = logout;

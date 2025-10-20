@@ -1,0 +1,106 @@
+/* form.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+div.error{
+    display: block;
+    background: rgba(248, 113, 113, 0.15); /* soft translucent red */
+    color: #f87171; /* soft red text */
+    border-left: 4px solid #f87171; /* accent bar */
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    margin-top: -10px;
+    margin-bottom: 15px;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+form h1 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffffff;
+    font-size: 2rem;
+}
+
+
+form {
+    background: #ffffff10;
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 600px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    color: #f0f0f0;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #444;
+    background: #1e1e2f;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #4cc9f0;
+    box-shadow: 0 0 5px #4cc9f0;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4cc9f0, #4361ee);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(67, 97, 238, 0.4);
+}
+
+a {
+    display: inline-block;
+    margin-top: 15px;
+    text-align: center;
+    width: 100%;
+    color: #f0f0f0;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #4cc9f0;
+}

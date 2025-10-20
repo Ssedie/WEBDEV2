@@ -4,87 +4,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crud App</title>
+    <title>CRUD App</title>
     <script src="http://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Inter:wght@300;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            background: radial-gradient(circle at top left, #0f172a, #020617);
+            font-family: 'Inter', sans-serif;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        /* Glass effect panels */
+        .glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+        }
+
+        /* Neon button */
+        .neon-btn {
+            background: linear-gradient(90deg, #22d3ee, #3b82f6);
+            color: white;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .neon-btn:hover {
+            box-shadow: 0 0 15px #22d3ee;
+            transform: scale(1.05);
+        }
+
+        /* Table styling */
+        table {
+            margin-top: 1rem;
+            border-spacing: 0 5px;
+            border-collapse: separate;
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        tbody tr {
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background: rgba(34, 211, 238, 0.08);
+            cursor: pointer;
+        }
+
+        /* Scrollbar for tech look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #22d3ee;
+            border-radius: 8px;
+        }
+
+        /* Smooth fade for modal */
+        #formSection {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <button onclick="openModal()" class="bg-blue-500 text-white rounded-md px-4 py-2">Add New Car</button>
-    <table class="tableMain border-collapse border border-gray-400 w-full">
-        <thead>
-            <tr id="tableHeader" class="bg-gray-200">
-                <th class="border px-4 py-2">ID</th>
-                <th class="border px-4 py-2">Make</th>
-                <th class="border px-4 py-2">Model</th>
-                <th class="border px-4 py-2">Year</th>
-                <th class="border px-4 py-2">License Plate Number</th>
-                <th class="border px-4 py-2">Color</th>
-                <th class="border px-4 py-2">Body Type</th>
-                <th class="border px-4 py-2">Engine Type</th>
-                <th class="border px-4 py-2">Transmission</th>
-                <th class="border px-4 py-2">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-        </tbody>
-    </table>
 
-    <div id="formSection" class="hidden fixed inset-0 bg-gray-500  bg-opacity-50">
-        <div class="bg-white p-6 rounded-md w-96 mx-auto mt-20">
-            <h2 id="modalTitle" class="text-xl mb-4">Add New Car</h2>
-            <form id="carForm" onsubmit="saveCar(event)">
-                <div class="md-2"> 
+    <!-- 🔐 LOGIN SECTION -->
+    <div id="loginSection" class="mt-10 glass w-80 mx-auto p-6 rounded-xl text-center">
+        <h2 class="text-cyan-400 mb-4 text-xl font-bold">Login</h2>
+        <input class="w-full bg-transparent border border-cyan-500 p-2 mb-2 rounded-md" type="text" id="username"
+            placeholder="Username">
+        <input class="w-full bg-transparent border border-cyan-500 p-2 mb-4 rounded-md" type="password" id="password"
+            placeholder="Password">
+        <button class="neon-btn px-4 py-2 rounded-md w-full" id="loginBtn">Login</button>
+    </div>
+
+    <!-- 🚗 MAIN CRUD SECTION (hidden by default) -->
+    <div id="crudSection" class="hidden">
+        <div class="flex justify-between items-center mb-4">
+            <h1 class="text-2xl text-cyan-400 font-bold">Car Management</h1>
+            <div class="flex gap-2">
+                <button onclick="openModal()" class="neon-btn px-4 py-2 rounded-md">Add New Car</button>
+                <button onclick="logout()" class="bg-gray-700 px-4 py-2 rounded-md text-white hover:bg-gray-800">Logout</button>
+            </div>
+        </div>
+
+        <table class="tableMain w-full border-collapse">
+            <thead>
+                <tr id="tableHeader" class="text-cyan-400 uppercase text-sm border-b border-gray-700">
+                    <th class="px-3 py-2">#</th>
+                    <th class="px-3 py-2">Make</th>
+                    <th class="px-3 py-2">Model</th>
+                    <th class="px-3 py-2">Year</th>
+                    <th class="px-3 py-2">License Plate Number</th>
+                    <th class="px-3 py-2">Color</th>
+                    <th class="px-3 py-2">Body Type</th>
+                    <th class="px-3 py-2">Engine Type</th>
+                    <th class="px-3 py-2">Transmission</th>
+                    <th class="px-3 py-2">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody" class="text-gray-300 text-sm"></tbody>
+        </table>
+    </div>
+
+    <!-- 🧩 ADD/EDIT MODAL -->
+    <div id="formSection" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
+        <div class="glass p-6 rounded-xl w-96">
+            <h2 id="modalTitle" class="text-cyan-400 text-xl mb-4 text-center">Add New Car</h2>
+            <form id="carForm" onsubmit="saveCar(event)" class="space-y-3">
+                <div>
                     <label class="block txt-gray-700">Make</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="make" placeholder="Make">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text" id="make"
+                        placeholder="Make" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">Model</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="model" placeholder="Model">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text" id="model"
+                        placeholder="Model" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">Year</label>
-                    <input class="border p-2 mb-2 w-full" type="number" id="year" placeholder="Year">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="number" id="year"
+                        placeholder="Year" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">License Plate Number</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="licensePlateNumber"
-                        placeholder="License Plate Number">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text"
+                        id="licensePlateNumber" placeholder="License Plate Number" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">Color</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="color" placeholder="Color">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text" id="color"
+                        placeholder="Color" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">Body Type</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="bodyType" placeholder="Body Type">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text" id="bodyType"
+                        placeholder="Body Type" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">Engine Type</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="engineType" placeholder="Engine Type">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text"
+                        id="engineType" placeholder="Engine Type" required>
                 </div>
                 <div>
                     <label class="block txt-gray-700">Transmission</label>
-                    <input class="border p-2 mb-2 w-full" type="text" id="transmission" placeholder="Transmission">
+                    <input class="w-full bg-transparent border border-cyan-500 p-2 rounded-md" type="text"
+                        id="transmission" placeholder="Transmission" required>
                 </div>
-                    <button onclick="closeModal()" type="button" class="bg-green-500 text-white px-4 py-2 rounded-md" id="addCarBtn">Cancel</button>
-                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded-md">Save</button>
+                <div class="flex justify-between mt-4">
+                    <button type="button" onclick="closeModal()"
+                        class="bg-gray-600 px-4 py-2 rounded-md text-white hover:bg-gray-700">Cancel</button>
+                    <button type="submit" class="neon-btn px-4 py-2 rounded-md">Save</button>
                 </div>
             </form>
-        </div>
-
-    </div>
-
-    <div>
-        <div>
-            <h2 class="text-xl mb-4">Login</h2>
-            <input class="border p-2 mb-2 w-full" type="text" id="username" placeholder="Username">
-            <input class="border p-2 mb-4 w-full" type="password" id="password" placeholder="Password">
-            <button class="bg-blue-500 text-white px-4 py-2 rounded-md" id="loginBtn">Login</button>
         </div>
     </div>
 
     <script src="js/main.js"></script>
-
 </body>
-
 </html>
