@@ -63,9 +63,6 @@ public class SecurityConfig {
         return source;
     }
 
-    // ========================
-    // 🔐 API Security (JWT / REST)
-    // ========================
     @Bean
     @Order(1)
     public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
@@ -102,9 +99,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // ========================
-    // 🖥️ Web Security (Thymeleaf / Form)
-    // ========================
     @Bean
     @Order(2)
     public SecurityFilterChain webSecurityFilterChain(HttpSecurity http) throws Exception {
