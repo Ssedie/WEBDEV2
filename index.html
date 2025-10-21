@@ -91,7 +91,7 @@
 
 <body>
 
-    
+
     <div id="loginSection" class="mt-10 glass w-80 mx-auto p-6 rounded-xl text-center">
         <h2 class="text-cyan-400 mb-4 text-xl font-bold">Login</h2>
         <input class="w-full bg-transparent border border-cyan-500 p-2 mb-2 rounded-md" type="text" id="username"
@@ -99,15 +99,34 @@
         <input class="w-full bg-transparent border border-cyan-500 p-2 mb-4 rounded-md" type="password" id="password"
             placeholder="Password">
         <button class="neon-btn px-4 py-2 rounded-md w-full" id="loginBtn">Login</button>
+
+        <p class="text-sm text-gray-400">Don't have an account?
+            <button onclick="toggleRegister()" class="text-cyan-400 underline">Register</button>
+        </p>
+    </div>
+    <div id="registerSection" class="hidden mt-10 glass w-80 mx-auto p-6 rounded-xl text-center">
+        <h2 class="text-cyan-400 mb-4 text-xl font-bold">Register</h2>
+        <input class="w-full bg-transparent border border-cyan-500 p-2 mb-2 rounded-md" type="text" id="regUsername"
+            placeholder="Username" required>
+        <input class="w-full bg-transparent border border-cyan-500 p-2 mb-2 rounded-md" type="password" id="regPassword"
+            placeholder="Password" required>
+        <input class="w-full bg-transparent border border-cyan-500 p-2 mb-4 rounded-md" type="password"
+            id="confirmPassword" placeholder="Confirm Password" required>
+        <button class="neon-btn px-4 py-2 rounded-md w-full mb-3" id="registerBtn">Register</button>
+
+        <p class="text-sm text-gray-400">Already have an account?
+            <button onclick="toggleLogin()" class="text-cyan-400 underline">Login</button>
+        </p>
     </div>
 
-    
+
     <div id="crudSection" class="hidden">
         <div class="flex justify-between items-center mb-4">
             <h1 class="text-2xl text-cyan-400 font-bold">Car Management</h1>
             <div class="flex gap-2">
                 <button onclick="openModal()" class="neon-btn px-4 py-2 rounded-md">Add New Car</button>
-                <button onclick="logout()" class="bg-gray-700 px-4 py-2 rounded-md text-white hover:bg-gray-800">Logout</button>
+                <button onclick="logout()"
+                    class="bg-gray-700 px-4 py-2 rounded-md text-white hover:bg-gray-800">Logout</button>
             </div>
         </div>
 
@@ -130,7 +149,7 @@
         </table>
     </div>
 
-    
+
     <div id="formSection" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center">
         <div class="glass p-6 rounded-xl w-96">
             <h2 id="modalTitle" class="text-cyan-400 text-xl mb-4 text-center">Add New Car</h2>
@@ -186,4 +205,5 @@
 
     <script src="js/main.js"></script>
 </body>
+
 </html>

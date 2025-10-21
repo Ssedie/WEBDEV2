@@ -2,11 +2,10 @@ var apiUrl = 'http://localhost:8000/api';
 var jwtToken = '';
 var editingCarId = null;
 
-// 🔹 Select UI elements for visibility control
 const loginSection = document.getElementById('loginSection');
 const crudSection = document.getElementById('crudSection');
+const registerSection = document.getElementById('registerSection');
 
-// ✅ On page load: if token is saved, auto-login
 window.addEventListener('DOMContentLoaded', () => {
     const savedToken = localStorage.getItem('jwtToken');
     if (savedToken) {
@@ -17,11 +16,28 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// 🔹 Login button handler
 document.getElementById('loginBtn').addEventListener('click', function () {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     login(username, password);
+});
+
+document.getElementById('registerBtn').addEventListener('click', function () {
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const confirm = document.getElementById('confirmPassword').value.trim();
+
+    if (!username || !password || !confirm) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    if (password !== confirm) {
+        alert('Passwords do not match.');
+        return;
+    }
+
+    register(username, password);
 });
 
 function login(username, password) {
@@ -37,10 +53,8 @@ function login(username, password) {
         if (data.token) {
             jwtToken = data.token;
 
-            // 🔹 Save login state
             localStorage.setItem('jwtToken', jwtToken);
 
-            // 🔹 Hide login, show CRUD
             loginSection.classList.add('hidden');
             crudSection.classList.remove('hidden');
 
@@ -53,6 +67,39 @@ function login(username, password) {
         console.error('Error:', error);
         alert('Login failed.');
     });
+}
+
+function register(username, password) {
+    fetch(`${apiUrl}/auth/register`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success || data.message === 'User registered successfully') {
+            alert('Registration successful! You can now log in.');
+            toggleLogin();
+        } else {
+            alert(data.message || 'Registration failed.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Registration failed.');
+    });
+}
+
+function toggleRegister() {
+    loginSection.classList.add('hidden');
+    registerSection.classList.remove('hidden');
+}
+
+function toggleLogin() {
+    registerSection.classList.add('hidden');
+    loginSection.classList.remove('hidden');
 }
 
 function fetchCar() {
@@ -217,3 +264,5 @@ function logout() {
 // make editCar accessible from inline HTML
 window.editCar = editCar;
 window.logout = logout;
+window.toggleRegister = toggleRegister;
+window.toggleLogin = toggleLogin;
