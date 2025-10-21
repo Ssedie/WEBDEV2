@@ -77,18 +77,36 @@ function register(username, password) {
         },
         body: JSON.stringify({ username, password })
     })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success || data.message === 'User registered successfully') {
-            alert('Registration successful! You can now log in.');
-            toggleLogin();
+    .then(async res => {
+        const text = await res.text();
+        const contentType = res.headers.get('content-type') || '';
+        let data = null;
+        if (contentType.includes('application/json') && text) {
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.warn('Failed to parse JSON response:', e);
+            }
+        }
+
+        if (res.ok) {
+            if (data && (data.success || data.message === 'User registered successfully' || data.token)) {
+                alert('Registration successful! You can now log in.');
+                toggleLogin();
+            } else {
+                console.log('Register response (status ok):', res.status, data || text);
+                alert('Registration successful! You can now log in.');
+                toggleLogin();
+            }
         } else {
-            alert(data.message || 'Registration failed.');
+
+            console.error('Registration failed:', res.status, data || text);
+            alert(data?.message || text || `Registration failed (${res.status})`);
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Registration failed.');
+        alert('Registration failed. See console for details.');
     });
 }
 
