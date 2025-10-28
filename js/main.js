@@ -253,7 +253,6 @@ function closeModal() {
     document.getElementById('carForm').reset();
 }
 
-// 🔹 Logout function (optional)
 function logout() {
     localStorage.removeItem('jwtToken');
     jwtToken = '';
@@ -261,7 +260,6 @@ function logout() {
     loginSection.classList.remove('hidden');
 }
 
-// make editCar accessible from inline HTML
 window.editCar = editCar;
 window.logout = logout;
 window.toggleRegister = toggleRegister;
