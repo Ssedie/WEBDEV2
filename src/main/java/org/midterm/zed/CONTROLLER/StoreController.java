@@ -5,10 +5,7 @@ import org.midterm.zed.CLASS.Store;
 import org.midterm.zed.DTO.StoreDTO;
 import org.midterm.zed.SERVICE.StoreService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,4 +29,7 @@ public class StoreController {
     }
 
     @PostMapping("/store/{id}")
+    public Store updateStore(@PathVariable int id, @Valid @RequestBody StoreDTO store) {
+
+    }
 }

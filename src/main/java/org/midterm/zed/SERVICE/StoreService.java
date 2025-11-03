@@ -22,26 +22,26 @@ public class StoreService {
         return repository.findById(id).orElse(null);
     }
 
-    public Store save(StoreDTO productDTO) {
+    public Store save(StoreDTO storeDTO) {
         Store product = new Store();
         product.setName(storeDTO.getName());
-        product.setDescription(productDTO.getDescription());
-        product.setStock(productDTO.getStock());
-        product.setUnit(productDTO.getUnit());
-        product.setPrice(productDTO.getPrice());
+        product.setDescription(storeDTO.getDescription());
+        product.setStock(storeDTO.getStock());
+        product.setUnit(storeDTO.getUnit());
+        product.setPrice(storeDTO.getPrice());
         return repository.save(product);
     }
 
-    public Product updateProduct(Product product, ProductDTO productDTO) {
-        product.setName(productDTO.getName());
-        product.setDescription(productDTO.getDescription());
-        product.setStock(productDTO.getStock());
-        product.setUnit(productDTO.getUnit());
-        product.setPrice(productDTO.getPrice());
+    public Store updateItem(Store product, StoreDTO storeDTO) {
+        product.setName(storeDTO.getName());
+        product.setDescription(storeDTO.getDescription());
+        product.setStock(storeDTO.getStock());
+        product.setUnit(storeDTO.getUnit());
+        product.setPrice(storeDTO.getPrice());
         return repository.save(product);
     }
 
-    public void deleteProduct(int id) {
+    public void deleteItem(int id) {
         repository.deleteById(id);
     }
 }
