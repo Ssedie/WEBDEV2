@@ -2,8 +2,9 @@ package org.midterm.zed.DTO;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
-public class StoreDTO{
+public class ProductDTO {
 
         @NotBlank(message = "Name is Required")
         private String name;
@@ -12,14 +13,14 @@ public class StoreDTO{
          private String description;
 
         @Min(1)
-        private int stock;
+        private Integer stock;
 
         @NotBlank(message = "Unit is Required")
         private String unit;
 
-        @NotBlank(message = "Price is Needed")
+        @NotNull(message = "Price is Needed")
         @Min(1)
-        private double price;
+        private Double price;
 
         public String getName() {
                 return name;

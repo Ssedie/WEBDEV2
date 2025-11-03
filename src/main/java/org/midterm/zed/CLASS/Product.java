@@ -4,8 +4,8 @@ package org.midterm.zed.CLASS;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "cars")
-public class Store {
+@Table(name = "products")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
