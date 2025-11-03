@@ -35,12 +35,24 @@
         <form id="itemForm" onsubmit="saveItem(event)">
             <input type="hidden" id="itemId">
             <div class="mb-2">
-                <label class="block text-gray-700">Make</label>
-                <input id="carMake" class="border p-2 w-full rounded" required>
+                <label class="block text-gray-700">Name</label>
+                <input id="itemName" class="border p-2 w-full rounded" required>
             </div>
             <div class="mb-2">
-                <label class="block text-gray-700">Model</label>
-                <input id="carModel" class="border p-2 w-full rounded" required>
+                <label class="block text-gray-700">Description</label>
+                <input id="itemDescription" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Stock</label>
+                <input id="itemStock" type="number" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Unit</label>
+                <input id="itemUnit" class="border p-2 w-full rounded" required>
+            </div>
+            <div class="mb-2">
+                <label class="block text-gray-700">Price</label>
+                <input id="itemPrice" type="number" class="border p-2 w-full rounded" required>
             </div>
             <div class="flex justify-end mt-4 space-x-2">
                 <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
