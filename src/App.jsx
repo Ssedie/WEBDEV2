@@ -1,4 +1,4 @@
-import "./App.css";
+
 import ProfileList from "./components/ProfileList";
 import StepCounter from "./components/StepCounter";
 import ProductInfo from "./components/ProductInfo";
@@ -7,62 +7,67 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { useState } from "react";
 
-function App() {
+const App = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   function toggleSidebar() {
     setIsSidebarVisible((prev) => !prev);
   }
 
-  return <>
-    <Header toggleSidebar={toggleSidebar} />
-    <Sidebar />
-    <main>
-      <div className="app-container">
-        <div className="app-container-inner">
-          <h2>1. Profile List</h2>
-          <div className="card">
-            <div className="profile-grid">
-              <ProfileList />
-            </div>
-          </div>
+  return (
+    <div className="flex h-screen bg-gray-100">
+      <Sidebar isVisible={isSidebarVisible}/>
+      <div className="flex-1 flex flex-col">
+        <Header toggleSidebar={toggleSidebar} />
+        <main className="flex-1 bg-slate-200">
+            <div className="app-container">
+              <div className="app-container-inner">
+                <h2>1. Profile List</h2>
+                <div className="card">
+                  <div className="profile-grid">
+                    <ProfileList />
+                  </div>
+                </div>
 
-          <h2>2. Step Counter</h2>
-          <div className="card">
-            <div className="center-content">
-              <div className="step-counter-wrapper">
-                <StepCounter />
+                <h2>2. Step Counter</h2>
+                <div className="card">
+                  <div className="center-content">
+                    <div className="step-counter-wrapper">
+                      <StepCounter />
+                    </div>
+                  </div>
+                </div>
+
+                <h2>3. Product Info</h2>
+                <div className="card">
+                  <div className="profile-grid">
+                    <ProductInfo
+                      name="Asus Tuf Gaming"
+                      price={49000}
+                      details="A fast laptop with 16GB RAM and 512GB SSD."
+                    />
+
+                    <ProductInfo
+                      name="Nitro V 15"
+                      price={46000}
+                      details="A laptop that defies logic with its speed"
+                    />
+
+                    <ProductInfo
+                      name="Vivobook"
+                      price={52000}
+                      details="A fast innovative laptop that can support HD designs."
+                    />
+
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-
-          <h2>3. Product Info</h2>
-          <div className="card">
-            <div className="profile-grid">
-              <ProductInfo
-                name="Asus Tuf Gaming"
-                price={49000}
-                details="A fast laptop with 16GB RAM and 512GB SSD."
-              />
-
-              <ProductInfo
-                name="Nitro V 15"
-                price={46000}
-                details="A laptop that defies logic with its speed"
-              />
-
-              <ProductInfo
-                name="Vivobook"
-                price={52000}
-                details="A fast innovative laptop that can support HD designs."
-              />
-
-            </div>
-          </div>
-        </div>
+        </main>
+        <Footer/>
       </div>
-    <main/>
-    <Footer />
+    </div>
+  )
 }
 
 export default App;
